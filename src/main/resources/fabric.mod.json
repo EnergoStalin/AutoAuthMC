@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "id": "autoauth",
+  "version": "${version}",
+  "name": "AutoAuth",
+  "description": "Automatically handles authentication for AuthMe plugin",
+  "authors": [
+    "EnergoStalin"
+  ],
+  "contact": {
+    "repo": "https://github.com/EnergoStalin/AutoAuth"
+  },
+  "license": "AGPL-3.0",
+  "icon": "icon.png",
+  "environment": "client",
+  "entrypoints": {},
+  "mixins": [
+    "autoauth.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+    "fabric": "*",
+    "minecraft": "${minecraft_version}"
+  }
+}
