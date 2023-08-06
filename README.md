@@ -1,6 +1,6 @@
 # AutoAuth
 
-A small basic mod for managing authentication for you.
+A small mod for managing basic authentication for you.
 
 ## Features offered by the project
 - Managing basic authentication on servers using /register /login scheme.
