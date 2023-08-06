@@ -1,4 +1,5 @@
 # AutoAuth
+![](https://github.com/EnergoStalin/AutoAuthMC/actions/workflows/publish.yml/badge.svg)
 
 A small mod for managing basic authentication for you.
 
