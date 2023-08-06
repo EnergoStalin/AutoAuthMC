@@ -9,7 +9,7 @@ import java.nio.file.Files
 import java.nio.file.Path
 
 
-class JsonStorage(private val datadir: Path) : Storage {
+class JsonStorage(private val datadir: Path) : MutableStorage {
 
     override val uri: Path = datadir.resolve("passwords.json")
 
