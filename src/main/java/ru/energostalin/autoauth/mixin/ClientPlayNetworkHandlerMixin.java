@@ -1,7 +1,7 @@
-package energostalin.autoauth.mixin;
+package ru.energostalin.autoauth.mixin;
 
-import energostalin.autoauth.lib.PasswordManager;
-import energostalin.autoauth.lib.PasswordManagerFactory;
+import ru.energostalin.autoauth.lib.PasswordManager;
+import ru.energostalin.autoauth.lib.PasswordManagerFactory;
 import net.fabricmc.loader.impl.util.log.Log;
 import net.fabricmc.loader.impl.util.log.LogCategory;
 import net.minecraft.client.MinecraftClient;

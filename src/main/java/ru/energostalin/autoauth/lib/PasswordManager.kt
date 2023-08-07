@@ -1,8 +1,8 @@
-package energostalin.autoauth.lib
+package ru.energostalin.autoauth.lib
 
-import energostalin.autoauth.lib.generators.PasswordGenerator
-import energostalin.autoauth.lib.storages.MutableStorage
-import energostalin.autoauth.lib.storages.Storage
+import ru.energostalin.autoauth.lib.generators.PasswordGenerator
+import ru.energostalin.autoauth.lib.storages.MutableStorage
+import ru.energostalin.autoauth.lib.storages.Storage
 
 class PasswordManager(private val mutableStorage: MutableStorage, private val generator: PasswordGenerator) {
     fun generateRandomAndSaveOrGetSaved(ip: String, name: String): String {

@@ -1,7 +1,7 @@
-package energostalin.autoauth.lib
+package ru.energostalin.autoauth.lib
 
-import energostalin.autoauth.lib.generators.PlainPasswordGenerator
-import energostalin.autoauth.lib.storages.JsonStorage
+import ru.energostalin.autoauth.lib.generators.PlainPasswordGenerator
+import ru.energostalin.autoauth.lib.storages.JsonStorage
 import net.fabricmc.loader.api.FabricLoader
 import kotlin.io.path.createDirectory
 import kotlin.io.path.exists

@@ -14,7 +14,9 @@
   "icon": "icon.png",
   "environment": "client",
   "entrypoints": {
-    "main": ["energostalin.autoauth.AutoAuth"]
+    "main": [
+      "ru.energostalin.autoauth.AutoAuth"
+    ]
   },
   "mixins": [
     "autoauth.mixins.json"

@@ -1,10 +1,10 @@
-package energostalin.autoauth
+package ru.energostalin.autoauth
 
-import energostalin.autoauth.lib.PasswordManagerFactory
-import energostalin.autoauth.lib.util.open
 import net.fabricmc.api.ModInitializer
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandManager.literal
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback
+import ru.energostalin.autoauth.lib.PasswordManagerFactory
+import ru.energostalin.autoauth.lib.util.open
 
 class AutoAuth : ModInitializer {
     override fun onInitialize() {

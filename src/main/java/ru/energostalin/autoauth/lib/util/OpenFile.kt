@@ -1,8 +1,8 @@
-package energostalin.autoauth.lib.util
+package ru.energostalin.autoauth.lib.util
 
-import energostalin.autoauth.lib.util.OSDetector.isLinux
-import energostalin.autoauth.lib.util.OSDetector.isMac
-import energostalin.autoauth.lib.util.OSDetector.isWindows
+import ru.energostalin.autoauth.lib.util.OSDetector.isLinux
+import ru.energostalin.autoauth.lib.util.OSDetector.isMac
+import ru.energostalin.autoauth.lib.util.OSDetector.isWindows
 import java.awt.Desktop
 import java.io.File
 

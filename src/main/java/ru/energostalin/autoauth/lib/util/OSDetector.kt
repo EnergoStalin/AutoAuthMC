@@ -1,4 +1,4 @@
-package energostalin.autoauth.lib.util
+package ru.energostalin.autoauth.lib.util
 
 import java.util.*
 

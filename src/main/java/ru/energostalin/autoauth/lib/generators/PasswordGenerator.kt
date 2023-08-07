@@ -1,4 +1,4 @@
-package energostalin.autoauth.lib.generators
+package ru.energostalin.autoauth.lib.generators
 
 interface PasswordGenerator {
     fun generate(length: Int): String

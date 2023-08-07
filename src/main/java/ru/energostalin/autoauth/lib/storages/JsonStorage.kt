@@ -1,4 +1,4 @@
-package energostalin.autoauth.lib.storages
+package ru.energostalin.autoauth.lib.storages
 
 import com.google.gson.Gson
 import com.google.gson.JsonIOException
