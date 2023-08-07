@@ -40,6 +40,11 @@ tasks.withType(JavaCompile::class).configureEach {
     this.options.encoding = "UTF-8"
 }
 
+tasks.jar {
+    archivesName.set("${Properties.mod_name.lowercase()}-${Versions.minecraft}-fabric")
+    version = Versions.mod
+}
+
 tasks.build {
     archivesName.set("${Properties.mod_name.lowercase()}-${Versions.minecraft}-fabric")
     version = Versions.mod
