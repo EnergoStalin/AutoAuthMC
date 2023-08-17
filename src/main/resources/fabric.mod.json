@@ -8,7 +8,9 @@
     "EnergoStalin"
   ],
   "contact": {
-    "repo": "https://github.com/EnergoStalin/AutoAuth"
+    "sources": "https://github.com/EnergoStalin/AutoAuth",
+    "homepage": "https://www.curseforge.com/minecraft/mc-mods/autoauth",
+    "issues": "https://github.com/EnergoStalin/AutoAuthMC/issues"
   },
   "license": "AGPL-3.0",
   "icon": "icon.png",

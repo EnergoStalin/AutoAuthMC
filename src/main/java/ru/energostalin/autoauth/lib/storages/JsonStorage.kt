@@ -1,7 +1,6 @@
 package ru.energostalin.autoauth.lib.storages
 
 import com.google.gson.Gson
-import com.google.gson.JsonIOException
 import com.google.gson.reflect.TypeToken
 import com.google.gson.stream.JsonReader
 import com.google.gson.stream.JsonWriter
@@ -32,15 +31,16 @@ class JsonStorage(private val datadir: Path) : MutableStorage {
     }
 
     private fun readList(): MutableList<Storage.ServerRecord> {
+        @Suppress("UNNECESSARY_SAFE_CALL")
         return try {
             Files.newInputStream(uri)?.use { ifs ->
                 ifs.bufferedReader().use {br ->
                     JsonReader(br).use {
-                        gson.fromJson(it, object : TypeToken<ArrayList<Storage.ServerRecord>>() {}.getType())
+                        gson.fromJson(it, object : TypeToken<ArrayList<Storage.ServerRecord>>() {}.type)
                     }
                 }
             } ?: mutableListOf()
-        } catch (err: JsonIOException) {
+        } catch (err: Exception) {
             mutableListOf()
         }
     }
