@@ -8,3 +8,15 @@ A small mod for managing basic authentication for you.
 
 ## How those features affect a user's experience
 - You don't ever need to manage passwords for such servers manually
+
+## Config
+### **.minecraft/config/AutoAuth/config.json**
+```json
+[
+  {
+    "ip": "127.0.0.1",
+    "user": "EnergoStalin",
+    "pass": "sus"
+  }
+]
+```
