@@ -9,7 +9,7 @@ A small mod for managing basic authentication for you.
 ## How those features affect a user's experience
 - You don't ever need to manage passwords for such servers manually
 
-## Config
+## Passwords store
 ### **.minecraft/config/AutoAuth/passwords.json**
 ```json
 [
