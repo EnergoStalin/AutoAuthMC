@@ -10,7 +10,7 @@ A small mod for managing basic authentication for you.
 - You don't ever need to manage passwords for such servers manually
 
 ## Config
-### **.minecraft/config/AutoAuth/config.json**
+### **.minecraft/config/AutoAuth/passwords.json**
 ```json
 [
   {
