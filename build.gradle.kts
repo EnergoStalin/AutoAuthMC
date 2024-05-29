@@ -10,12 +10,10 @@ repositories {
 }
 
 dependencies {
-    // To change the versions see the gradle.properties file
     minecraft(Dependencies.minecraft)
     mappings(Dependencies.yarn)
     modImplementation(Dependencies.fabric_loader)
 
-    // Fabric API. This is technically optional, but you probably want it anyway.
     modImplementation(Dependencies.fabric_api)
 }
 
