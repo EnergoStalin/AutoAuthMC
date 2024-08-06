@@ -9,17 +9,17 @@ fun getEnvOrDefault(env: String, default: String = ""): String {
 }
 
 object Versions {
-    val kotlin = "1.8.21"
-    val fabric_loom = "1.2.7"
+    val kotlin = "1.9.20"
+    val fabric_loom = "1.6.11"
 
-    val minecraft = "1.20.1"
-    val yarn_mappings = "1.20.1+build.10"
-    val fabric_loader = "0.14.22"
+    val minecraft = "1.21"
+    val yarn_mappings = "1.21+build.1"
+    val fabric_loader = "0.15.11"
 
     val mod = getEnvOrDefault("GITHUB_REF_NAME", "v1.1").replace("v", "")
-    val fabric = "0.86.1+1.20.1"
+    val fabric = "0.100.1+1.21"
 
-    val java = 17
+    val java = 21
 }
 
 object Dependencies {
