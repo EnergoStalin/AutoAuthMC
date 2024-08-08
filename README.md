@@ -3,8 +3,8 @@
 
 A small mod for managing client side of basic authentication for you.
 
-# Компиляция
-Для компиляции нужен Gradle минимум 8.9. Java минимум 21 (как для Gradle, так и для проекта). 
+## Compile
+To compile, you need Gradle at least 8.9. Java at least 21 (for both Gradle and the project).
 
 ## Features
 - Manage basic authentication process on client for servers using /register /login scheme.

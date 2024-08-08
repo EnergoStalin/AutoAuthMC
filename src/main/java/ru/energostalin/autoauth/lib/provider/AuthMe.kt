@@ -54,10 +54,10 @@ class AuthMe(private val client: MinecraftClient) {
                 login()
             }
 
-            if ((msg.contains("/login") || msg.contains("/register"))) {
-                if (msg.contains("/login") && AuthState.state != AuthState.State.MANUAL_LOGIN_REQUIRED) {
+            if ((msg.contains("/login") || msg.contains("/l") || msg.contains("/register") || msg.contains("/reg"))) {
+                if (msg.contains("/login") && AuthState.state != AuthState.State.MANUAL_LOGIN_REQUIRED || msg.contains("/l") && AuthState.state != AuthState.State.MANUAL_LOGIN_REQUIRED)  {
                     login()
-                } else if (msg.contains("/register")) {
+                } else if (msg.contains("/register") || msg.contains("/reg")) {
                     register()
                 }
             } else if (msg.contains("Successful login!")) {
@@ -69,7 +69,7 @@ class AuthMe(private val client: MinecraftClient) {
     fun handleChatCommand(msg: String) {
         if(AuthState.state == AuthState.State.LOGGED_IN) return
 
-        if (msg.contains("login") && AuthState.state == AuthState.State.MANUAL_LOGIN_REQUIRED) {
+        if (msg.contains("login") && AuthState.state == AuthState.State.MANUAL_LOGIN_REQUIRED || msg.contains("l") && AuthState.state == AuthState.State.MANUAL_LOGIN_REQUIRED) {
             savePassword(msg.split(' ')[1])
         }
     }
