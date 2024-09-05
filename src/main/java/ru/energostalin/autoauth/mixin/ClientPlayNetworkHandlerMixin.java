@@ -1,7 +1,6 @@
 package ru.energostalin.autoauth.mixin;
 
 import net.minecraft.network.packet.s2c.play.*;
-import ru.energostalin.autoauth.AutoAuthKt;
 import ru.energostalin.autoauth.lib.AuthState;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
