@@ -1,5 +1,3 @@
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-
 plugins {
     id("fabric-loom") version Versions.fabric_loom
     kotlin("jvm") version Versions.kotlin
@@ -21,12 +19,6 @@ tasks.withType<JavaCompile> {
     targetCompatibility = Versions.java.toString()
 }
 
-tasks.withType<KotlinCompile> {
-    kotlinOptions {
-        jvmTarget = Versions.java.toString()
-    }
-}
-
 tasks.processResources {
     inputs.property("version", Versions.mod)
     inputs.property("minecraft_version", Versions.minecraft)
@@ -43,8 +35,6 @@ tasks.processResources {
     }
 }
 
-val archiveName = "${Properties.mod_name.lowercase()}-${Versions.minecraft}-fabric"
-
 tasks.withType<JavaCompile> {
     options.encoding = "UTF-8"
 }
@@ -53,6 +43,8 @@ tasks.jar {
     version = Versions.mod
 }
 
-tasks.build {
-    version = Versions.mod
+tasks.remapJar {
+    archiveFileName.set(
+        "${Properties.mod_name.lowercase()}-${Versions.minecraft}-fabric.jar"
+    )
 }
