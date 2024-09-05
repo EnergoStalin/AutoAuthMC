@@ -30,7 +30,6 @@ public abstract class ClientPlayNetworkHandlerMixin {
     private void onGameJoin(GameJoinS2CPacket packet, CallbackInfo ci) {
         AuthState.INSTANCE.setState(AuthState.State.UNKNOWN);
 
-        AutoAuthKt.getLogger().info("joined to the server");
     }
 
     @Inject(method = "sendChatCommand", at = @At("RETURN"))

@@ -4,7 +4,7 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.google.gson.stream.JsonReader
 import com.google.gson.stream.JsonWriter
-import org.apache.commons.codec.binary.Base64
+import java.util.Base64
 import java.nio.file.Files
 import java.nio.file.Path
 
@@ -38,7 +38,7 @@ class JsonStorage(datadir: Path) : MutableStorage {
                     JsonReader(br).use {
                         val records = gson.fromJson(it, object : TypeToken<ArrayList<Storage.ServerRecord>>() {}.type) as ArrayList<Storage.ServerRecord>
                         records.forEach { record ->
-                            record.pass = String(Base64.decodeBase64(record.pass))
+                            record.pass = String(Base64.getDecoder().decode(record.pass))
                         }
                         records
                     }
@@ -50,13 +50,16 @@ class JsonStorage(datadir: Path) : MutableStorage {
     }
 
     private fun saveList(passwords: MutableList<Storage.ServerRecord>) {
-        passwords.forEach { record ->
-            record.pass = Base64.encodeBase64String(record.pass.toByteArray(Charsets.UTF_8))
+        val copy = passwords.toMutableList()
+
+        copy.forEach { record ->
+            record.pass = Base64.getEncoder().encodeToString(record.pass.toByteArray(Charsets.UTF_8))
         }
+
         Files.newOutputStream(uri).use { ofs ->
             ofs.bufferedWriter().use { bw ->
                 JsonWriter(bw).use {
-                    gson.toJson(passwords, passwords.javaClass, it)
+                    gson.toJson(copy, copy.javaClass, it)
                 }
             }
         }
