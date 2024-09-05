@@ -8,9 +8,9 @@ import java.util.Base64
 import java.nio.file.Files
 import java.nio.file.Path
 
-class JsonStorage(datadir: Path) : MutableStorage {
+class JsonStorage(dataDir: Path) : MutableStorage {
 
-    override val uri: Path = datadir.resolve("passwords.json")
+    override val uri: Path = dataDir.resolve("passwords.json")
 
     private val gson: Gson = Gson()
 
