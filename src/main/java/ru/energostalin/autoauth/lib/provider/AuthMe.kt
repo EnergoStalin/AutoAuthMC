@@ -62,7 +62,7 @@ class AuthMe(private val client: MinecraftClient) {
     }
 
     private fun login() {
-        if(AuthState.state == AuthState.State.WAITING_FOR_ANSWER) return
+        if(AuthState.state.get() == AuthState.State.WAITING_FOR_ANSWER) return
 
         val pass = manager.getPassword(address, playerName)
         if (pass.isNullOrEmpty()) {
@@ -70,29 +70,29 @@ class AuthMe(private val client: MinecraftClient) {
                 Text.literal("No password saved for current server. Required to login once manually.")
                     .setStyle(Style.EMPTY.withColor(0xffec4f))
             )
-            AuthState.state = AuthState.State.MANUAL_LOGIN_REQUIRED
+            AuthState.state.set(AuthState.State.MANUAL_LOGIN_REQUIRED)
         } else {
             sendChatCommand("login $pass")
-            AuthState.state = AuthState.State.WAITING_FOR_ANSWER
+            AuthState.state.set(AuthState.State.WAITING_FOR_ANSWER)
         }
     }
 
     private fun register() {
-        if(AuthState.state == AuthState.State.WAITING_FOR_ANSWER) return
+        if(AuthState.state.get() == AuthState.State.WAITING_FOR_ANSWER) return
         val pass = manager.generateRandomAndSaveOrGetSaved(address, playerName)
         sendChatCommand("register $pass $pass")
-        AuthState.state = AuthState.State.WAITING_FOR_ANSWER
+        AuthState.state.set(AuthState.State.WAITING_FOR_ANSWER)
     }
 
     fun handleGameMessage(msg: String) {
-        if(AuthState.state == AuthState.State.LOGGED_IN || AuthState.state == AuthState.State.TIMED_OUT) return
+        if(AuthState.state.get() == AuthState.State.LOGGED_IN || AuthState.state.get() == AuthState.State.TIMED_OUT) return
 
-        if(AuthState.state == AuthState.State.WAITING_FOR_ANSWER && isLoginSuccessful(msg)) {
-            AuthState.state = AuthState.State.LOGGED_IN
+        if(AuthState.state.get() == AuthState.State.WAITING_FOR_ANSWER && isLoginSuccessful(msg)) {
+            AuthState.state.set(AuthState.State.LOGGED_IN)
             return
         }
 
-        if (AuthState.state != AuthState.State.UNKNOWN) return
+        if (AuthState.state.get() != AuthState.State.UNKNOWN) return
 
         val pass = manager.getPassword(address, playerName)
         if(!pass.isNullOrEmpty()) {
@@ -100,14 +100,14 @@ class AuthMe(private val client: MinecraftClient) {
         }
 
         if(isServerLoginRequested(msg)) {
-            if (AuthState.state != AuthState.State.MANUAL_LOGIN_REQUIRED) login()
+            if (AuthState.state.get() != AuthState.State.MANUAL_LOGIN_REQUIRED) login()
         } else if (isServerRegisterRequested(msg)) {
             register()
         }
     }
 
     fun handleChatCommand(msg: String) {
-        if(AuthState.state != AuthState.State.MANUAL_LOGIN_REQUIRED) return
+        if(AuthState.state.get() != AuthState.State.MANUAL_LOGIN_REQUIRED) return
 
         if (isLoginCommand(msg)) {
             savePasswordFromLoginCommand(msg)

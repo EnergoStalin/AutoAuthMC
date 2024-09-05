@@ -22,7 +22,7 @@ public abstract class ClientPlayNetworkHandlerMixin {
 
     @Inject(method = "sendChatCommand", at = @At("RETURN"))
     private void sendChatCommand(String command, CallbackInfo ci) {
-        if(AuthState.INSTANCE.getState() == AuthState.State.LOGGED_IN) {
+        if(AuthState.INSTANCE.getState().get() == AuthState.State.LOGGED_IN) {
             return;
         }
 
@@ -31,7 +31,7 @@ public abstract class ClientPlayNetworkHandlerMixin {
 
     @Inject(method = "onGameMessage", at = @At("RETURN"))
     private void onGameMessage(GameMessageS2CPacket packet, CallbackInfo ci) {
-        if(AuthState.INSTANCE.getState() == AuthState.State.LOGGED_IN) {
+        if(AuthState.INSTANCE.getState().get() == AuthState.State.LOGGED_IN) {
             return;
         }
 
