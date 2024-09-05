@@ -10,14 +10,24 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import net.minecraft.client.network.ClientPlayNetworkHandler;
 
+import java.util.Timer;
+import java.util.TimerTask;
 
 @Mixin(ClientPlayNetworkHandler.class)
 public abstract class ClientPlayNetworkHandlerMixin {
+    private final Timer timer = new Timer();
 
     @Inject(method = "onGameJoin", at = @At("RETURN"))
     private void onGameJoin(GameJoinS2CPacket packet, CallbackInfo ci) {
-        AuthState.INSTANCE.setState(AuthState.State.UNKNOWN);
+        AuthState.INSTANCE.getState().set(AuthState.State.UNKNOWN);
 
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                if(AuthState.INSTANCE.getState().get() == AuthState.State.LOGGED_IN) return;
+                AuthState.INSTANCE.getState().set(AuthState.State.TIMED_OUT);
+            }
+        }, 30000);
     }
 
     @Inject(method = "sendChatCommand", at = @At("RETURN"))
