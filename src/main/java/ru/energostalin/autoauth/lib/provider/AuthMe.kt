@@ -6,6 +6,25 @@ import net.minecraft.text.Text
 import ru.energostalin.autoauth.lib.AuthState
 import ru.energostalin.autoauth.lib.PasswordManagerFactory.createDefault
 
+val SUCCESS_LOGIN_PATTERNS = listOf(
+    Regex("Successful login!"),
+)
+
+val SERVER_LOGIN_REQUEST_PATTERNS = listOf(
+    Regex("^/login\\s"),
+    Regex("^/l\\s")
+)
+
+val SERVER_REGISTER_REQUEST_PATTERNS = listOf(
+    Regex("^/register\\s"),
+    Regex("^/reg\\s")
+)
+
+val CLIENT_LOGIN_REQUEST_PATTERNS = listOf(
+    Regex("^/login\\s"),
+    Regex("^/l\\s")
+)
+
 class AuthMe(private val client: MinecraftClient) {
 
     private val manager = createDefault()
@@ -19,8 +38,27 @@ class AuthMe(private val client: MinecraftClient) {
         client.networkHandler!!.sendChatCommand(msg)
     }
 
-    private fun savePassword(password: String) {
+    private fun savePasswordFromLoginCommand(cmd: String) {
+        val pos = cmd.indexOfFirst { e -> e.isWhitespace() }
+        val password = cmd.slice(pos until cmd.length)
+
         manager.savePassword(address, playerName, password)
+    }
+
+    private fun isServerLoginRequested(msg: String): Boolean {
+        return SERVER_LOGIN_REQUEST_PATTERNS.any { e -> e.matches(msg) }
+    }
+
+    private fun isServerRegisterRequested(msg: String): Boolean {
+        return SERVER_REGISTER_REQUEST_PATTERNS.any { e -> e.matches(msg) }
+    }
+
+    private fun isLoginSuccessful(msg: String): Boolean {
+        return SUCCESS_LOGIN_PATTERNS.any { e -> e.matches(msg) }
+    }
+
+    private fun isLoginCommand(msg: String): Boolean {
+        return CLIENT_LOGIN_REQUEST_PATTERNS.any { e -> e.matches(msg) }
     }
 
     private fun login() {
@@ -47,30 +85,32 @@ class AuthMe(private val client: MinecraftClient) {
     }
 
     fun handleGameMessage(msg: String) {
-        if(AuthState.state == AuthState.State.LOGGED_IN) return
-        else if (AuthState.state == AuthState.State.UNKNOWN) {
-            val pass = manager.getPassword(address, playerName)
-            if(!pass.isNullOrEmpty()) {
-                login()
-            }
+        if(AuthState.state == AuthState.State.LOGGED_IN || AuthState.state == AuthState.State.TIMED_OUT) return
 
-            if ((msg.contains("/login") || msg.contains("/l") || msg.contains("/register") || msg.contains("/reg"))) {
-                if (msg.contains("/login") && AuthState.state != AuthState.State.MANUAL_LOGIN_REQUIRED || msg.contains("/l") && AuthState.state != AuthState.State.MANUAL_LOGIN_REQUIRED)  {
-                    login()
-                } else if (msg.contains("/register") || msg.contains("/reg")) {
-                    register()
-                }
-            } else if (msg.contains("Successful login!")) {
-                AuthState.state = AuthState.State.LOGGED_IN
-            }
+        if(AuthState.state == AuthState.State.WAITING_FOR_ANSWER && isLoginSuccessful(msg)) {
+            AuthState.state = AuthState.State.LOGGED_IN
+            return
+        }
+
+        if (AuthState.state != AuthState.State.UNKNOWN) return
+
+        val pass = manager.getPassword(address, playerName)
+        if(!pass.isNullOrEmpty()) {
+            login()
+        }
+
+        if(isServerLoginRequested(msg)) {
+            if (AuthState.state != AuthState.State.MANUAL_LOGIN_REQUIRED) login()
+        } else if (isServerRegisterRequested(msg)) {
+            register()
         }
     }
 
     fun handleChatCommand(msg: String) {
-        if(AuthState.state == AuthState.State.LOGGED_IN) return
+        if(AuthState.state != AuthState.State.MANUAL_LOGIN_REQUIRED) return
 
-        if (msg.contains("login") && AuthState.state == AuthState.State.MANUAL_LOGIN_REQUIRED || msg.contains("l") && AuthState.state == AuthState.State.MANUAL_LOGIN_REQUIRED) {
-            savePassword(msg.split(' ')[1])
+        if (isLoginCommand(msg)) {
+            savePasswordFromLoginCommand(msg)
         }
     }
 }
