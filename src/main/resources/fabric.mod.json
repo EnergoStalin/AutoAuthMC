@@ -3,7 +3,7 @@
   "id": "autoauth",
   "version": "${version}",
   "name": "AutoAuth",
-  "description": "Automatically handles authentication for AuthMe plugin",
+  "description": "Automatically handles authentication on servers using /login /register scheme",
   "authors": [
     "EnergoStalin"
   ],
