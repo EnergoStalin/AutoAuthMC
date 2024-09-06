@@ -14,7 +14,7 @@ jobs:
         with:
           version: ${{ github.ref_name }}
       - name: Publish release files (Fabric)
-        uses: Kir-Antipov/mc-publish@4db8bd126f74d5e143822181a2b1201308e2c796
+        uses: Kir-Antipov/mc-publish@v3
         with:
           # Only include this section if you wish to publish
           # your assets on Modrinth.
@@ -31,5 +31,5 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
           java: |
-            17
+            21
 
