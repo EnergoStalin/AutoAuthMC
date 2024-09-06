@@ -11,18 +11,18 @@ val SUCCESS_LOGIN_PATTERNS = listOf(
 )
 
 val SERVER_LOGIN_REQUEST_PATTERNS = listOf(
-    Regex("^/login\\s"),
-    Regex("^/l\\s")
+    Regex("\\s/login\\s"),
+    Regex("\\s/l\\s")
 )
 
 val SERVER_REGISTER_REQUEST_PATTERNS = listOf(
-    Regex("^/register\\s"),
-    Regex("^/reg\\s")
+    Regex("\\s/register\\s"),
+    Regex("\\s/reg\\s")
 )
 
 val CLIENT_LOGIN_REQUEST_PATTERNS = listOf(
-    Regex("^/login\\s"),
-    Regex("^/l\\s")
+    Regex("^/login "),
+    Regex("^/l ")
 )
 
 class AuthMe(private val client: MinecraftClient) {
@@ -46,19 +46,19 @@ class AuthMe(private val client: MinecraftClient) {
     }
 
     private fun isServerLoginRequested(msg: String): Boolean {
-        return SERVER_LOGIN_REQUEST_PATTERNS.any { e -> e.matches(msg) }
+        return SERVER_LOGIN_REQUEST_PATTERNS.any { it.containsMatchIn(msg) }
     }
 
     private fun isServerRegisterRequested(msg: String): Boolean {
-        return SERVER_REGISTER_REQUEST_PATTERNS.any { e -> e.matches(msg) }
+        return SERVER_REGISTER_REQUEST_PATTERNS.any { it.containsMatchIn(msg) }
     }
 
     private fun isLoginSuccessful(msg: String): Boolean {
-        return SUCCESS_LOGIN_PATTERNS.any { e -> e.matches(msg) }
+        return SUCCESS_LOGIN_PATTERNS.any { it.containsMatchIn(msg) }
     }
 
     private fun isLoginCommand(msg: String): Boolean {
-        return CLIENT_LOGIN_REQUEST_PATTERNS.any { e -> e.matches(msg) }
+        return CLIENT_LOGIN_REQUEST_PATTERNS.any { it.containsMatchIn(msg) }
     }
 
     private fun login() {
