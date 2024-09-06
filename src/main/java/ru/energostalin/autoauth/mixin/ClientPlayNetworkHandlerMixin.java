@@ -31,19 +31,11 @@ public abstract class ClientPlayNetworkHandlerMixin {
 
     @Inject(method = "sendChatCommand", at = @At("RETURN"))
     private void sendChatCommand(String command, CallbackInfo ci) {
-        if(AuthState.INSTANCE.getState().get() == AuthState.State.LOGGED_IN) {
-            return;
-        }
-
         AuthState.INSTANCE.getProvider().handleChatCommand(command);
     }
 
     @Inject(method = "onGameMessage", at = @At("RETURN"))
     private void onGameMessage(GameMessageS2CPacket packet, CallbackInfo ci) {
-        if(AuthState.INSTANCE.getState().get() == AuthState.State.LOGGED_IN) {
-            return;
-        }
-
         AuthState.INSTANCE.getProvider().handleGameMessage(packet.content().getString());
     }
 
