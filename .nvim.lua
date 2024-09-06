@@ -36,6 +36,11 @@ overseer.register_template({
 })
 
 overseer.register_template({
+  name = 'dependencies',
+  builder = gradle('--refresh-dependencies'),
+})
+
+overseer.register_template({
   name = 'spigot',
   builder = function()
     return {
