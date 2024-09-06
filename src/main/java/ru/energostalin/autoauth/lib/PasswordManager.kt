@@ -10,7 +10,7 @@ class PasswordManager(private val mutableStorage: MutableStorage, private val ge
         if(entry != null) return entry.pass
 
         val pass = generator.generate(24)
-        mutableStorage.addOne(Storage.ServerRecord(ip, name, pass))
+        mutableStorage.addOne(Storage.ServerRecord(ip, name, pass, null))
         return pass
     }
 
@@ -19,7 +19,7 @@ class PasswordManager(private val mutableStorage: MutableStorage, private val ge
     }
 
     fun savePassword(ip: String, name: String, pass: String) {
-        return mutableStorage.addOne(Storage.ServerRecord(ip, name, pass))
+        return mutableStorage.addOne(Storage.ServerRecord(ip, name, pass, null))
     }
 
     fun getStorage(): Storage {

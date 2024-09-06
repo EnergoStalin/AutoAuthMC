@@ -21,6 +21,7 @@ class JsonStorage(dataDir: Path) : MutableStorage {
 
     override fun addOne(record: Storage.ServerRecord) {
         val passwords = readList()
+
         passwords.add(record)
 
         saveList(passwords)
@@ -36,11 +37,7 @@ class JsonStorage(dataDir: Path) : MutableStorage {
             Files.newInputStream(uri)?.use { ifs ->
                 ifs.bufferedReader().use { br ->
                     JsonReader(br).use {
-                        val records = gson.fromJson(it, object : TypeToken<ArrayList<Storage.ServerRecord>>() {}.type) as ArrayList<Storage.ServerRecord>
-                        records.forEach { record ->
-                            record.pass = String(Base64.getDecoder().decode(record.pass))
-                        }
-                        records
+                        gson.fromJson(it, object : TypeToken<ArrayList<Storage.ServerRecord>>() {}.type)
                     }
                 }
             } ?: mutableListOf()
@@ -50,16 +47,10 @@ class JsonStorage(dataDir: Path) : MutableStorage {
     }
 
     private fun saveList(passwords: MutableList<Storage.ServerRecord>) {
-        val copy = passwords.toMutableList()
-
-        copy.forEach { record ->
-            record.pass = Base64.getEncoder().encodeToString(record.pass.toByteArray(Charsets.UTF_8))
-        }
-
         Files.newOutputStream(uri).use { ofs ->
             ofs.bufferedWriter().use { bw ->
                 JsonWriter(bw).use {
-                    gson.toJson(copy, copy.javaClass, it)
+                    gson.toJson(passwords, passwords.javaClass, it)
                 }
             }
         }
