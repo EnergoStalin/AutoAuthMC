@@ -2,14 +2,18 @@ vim.fn.setenv('PATH', '/usr/lib/jvm/java-21-openjdk/bin:' .. vim.fn.getenv('PATH
 
 local overseer = require('overseer')
 
-local function gradle(task, args)
+local function gradle(task, args, config)
+  config = config or {}
+  config.name = config.name or ('gradle ' .. task)
+
   return function()
     return {
-      name = 'gradle ' .. task,
+      name = config.name,
       cmd = 'sh gradlew ' .. task .. ' --daemon ' .. (args or ''),
       components = {
-        { 'on_complete_dispose', timeout = 10, require_view = { 'FAILURE', }, },
         'default',
+        { 'on_complete_dispose', timeout = 10, require_view = { 'FAILURE', }, },
+        config.components and unpack(config.components) or nil,
       },
     }
   end
@@ -17,7 +21,7 @@ end
 
 overseer.register_template({
   name = 'daemon',
-  builder = gradle('scan', '--foreground'),
+  builder = gradle('scan', '--foreground', { name = 'daemon', components = { 'unique', }, }),
 })
 
 overseer.run_template({ name = 'daemon', })
