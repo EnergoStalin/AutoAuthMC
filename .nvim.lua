@@ -1,3 +1,5 @@
+vim.fn.setenv('PATH', '/usr/lib/jvm/java-21-openjdk/bin:' .. vim.fn.getenv('PATH'))
+
 local overseer = require('overseer')
 
 local function gradle(task, args)
