@@ -1,4 +1,4 @@
-package ru.energostalin.autoauth.build.utils
+package ru.energostalin.autoauth.builder.utils
 
 import java.io.File
 import java.net.HttpURLConnection

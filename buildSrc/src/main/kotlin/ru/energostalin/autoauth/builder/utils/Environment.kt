@@ -1,4 +1,4 @@
-package ru.energostalin.autoauth.build.utils
+package ru.energostalin.autoauth.builder.utils
 
 fun getEnvOrDefault(env: String, default: String = ""): String {
     return try {

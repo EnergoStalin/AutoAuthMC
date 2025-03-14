@@ -1,8 +1,12 @@
-package ru.energostalin.autoauth.build.conventions
+package ru.energostalin.autoauth.builder.conventions
 
-import ru.energostalin.autoauth.build.utils.*
+import ru.energostalin.autoauth.builder.utils.*
 
-data class Versions(val constraint: String, val mixin: String)
+data class Versions(
+    val constraint: String,
+    val mixin: String,
+    val java: Int = 21
+)
 
 fun Project.setupForMinecraftVersion(minecraftVersion: String, versions: Versions) {
     val fabric = FabricVersionFetcher(minecraftVersion)
@@ -12,7 +16,7 @@ fun Project.setupForMinecraftVersion(minecraftVersion: String, versions: Version
 
     val modVersion = getEnvOrDefault("GITHUB_REF_NAME", "v1.1").replace("v", "")
 
-    dependecies {
+    dependencies {
         minecraft()
         mappings()
         modImplementaion()
@@ -34,7 +38,7 @@ fun Project.setupForMinecraftVersion(minecraftVersion: String, versions: Version
     }
 
     tasks."remapJar" {
-        archiveFileName.set("${Properties.mod_name.lowercase()}-${Versions.minecraft}-fabric.jar")
+        archiveFileName.set("${Properties.mod_name.lowercase()}-${Versions.constraint}-fabric.jar")
     }
 
     tasks.withType<JavaCompile> {
