@@ -1,8 +1,3 @@
 plugins {
-    "kotlin-dsl"
     kotlin("jvm") version Versions.kotlin
-}
-
-repositories {
-    mavenCentral()
 }
